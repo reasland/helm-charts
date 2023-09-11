@@ -1,0 +1,160 @@
+# Name of k8 resources
+name: generic
+
+image:
+  repository: nginx
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Labels to append to deployment and all pods
+podLabels:
+  app: generic
+  chart: reasland-generic
+
+serviceAccount:
+  # toggle on if a service account should be created (uses default serviceaccount otherwise)
+  create: true
+  # specify custom name, otherwise will use .Values.name for service account
+  name:
+
+# containerSecurityContext:
+
+# volumeMounts:
+
+# nodeSelector:
+
+# tolerations:
+
+# affinity:
+
+# topologySpreadConstraints:
+
+# securityContext:
+
+# volumes:
+
+# Set priority class
+# priorityClassName:
+
+# defined secrets from pulling from private docker repo
+# imagePullSecrets:
+
+# block to define init containers
+# extraInitContainers:
+
+# block to define extra containers to run in pod in-addition with primary container
+# extraContainers:
+
+## Additional server container environment variables
+##
+## You specify this manually like you would a raw deployment manifest.
+## This means you can bind in environment variables from secrets.
+##
+## e.g. static environment variable:
+##  - name: DEMO_GREETING
+##    value: "Hello from the environment"
+##
+## e.g. secret environment variable:
+## - name: USERNAME
+##   valueFrom:
+##     secretKeyRef:
+##       name: mysecret
+##       key: username
+env: []
+
+# extraArgs:
+
+# command:
+
+liveness:
+  enabled: false
+  # probe:
+  #   httpGet:
+  #     path: /
+  #     port: 80
+
+
+readiness:
+  enabled: false
+  # probe:
+  #   httpGet:
+  #     path: /
+  #     port: 80
+
+service:
+  type: ClusterIP
+  ## Specify ports in same format of kube spec
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+    # - port: 443
+    #   targetPort: 443
+    #   protocol: TCP
+    #   name: https
+
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
+
+ingress:
+  ## Enable Ingress.
+  ##
+  enabled: false
+  className: ""
+  path: /
+  pathType: ImplementationSpecific
+
+  ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
+  extraPaths: []
+  # - path: /*
+  #   backend:
+  #     serviceName: ssl-redirect
+  #     servicePort: use-annotation
+
+  ## Annotations.
+  ##
+  # annotations:
+  #   kubernetes.io/ingress.class: nginx
+  #   kubernetes.io/tls-acme: 'true'
+
+  ## Hostnames.
+  ## Must be provided if Ingress is enabled.
+  ##
+  # hosts:
+  #   - app.domain.com
+
+  ## TLS configuration.
+  ## Secrets must be manually created in the namespace.
+  ##
+  # tls:
+  #   - secretName: app-tls
+  #     hosts:
+  #       - app.domain.com
+
+## If true, will create/use a Persistent Volume Claim
+## If false, use emptyDir
+##
+
+# persistentVolume:
+#   - name: server-files
+#     accessModes:
+#       - ReadWriteOnce
+#     annotations: {}
+#     mountPath: /data
+#     size: 2Gi
+
+  # storageClass: "-"
+
+# persistentVolume:
+  # enabled: false
+  # accessModes:
+  #   - ReadWriteOnce
+  # annotations: {}
+  # existingClaim: ""
+  # mountPath: /data
+  # size: 2Gi
+
+  # # storageClass: "-"
+
+  # subPath: ""

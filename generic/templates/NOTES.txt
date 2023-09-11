@@ -1,0 +1,7 @@
+You have successfully deployed your app
+
+Please refer to the settings set within the config and kubectl for ports/ip's for connections
+
+You can search for all created resources with the below command
+
+kubectl get all -l chart=reasland-generic -o wide

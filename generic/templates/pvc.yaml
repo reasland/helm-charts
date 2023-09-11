@@ -1,0 +1,28 @@
+{{ if .Values.persistentVolume }}
+{{ range $range := .Values.persistentVolume}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  {{- with $range.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+  name: {{ $range.name }}
+spec:
+  accessModes:
+    {{- toYaml $range.accessModes | nindent 4 }}
+  {{- if $range.storageClass }}
+  {{- if (eq "-" $range.storageClass) }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: "{{ $range.storageClass }}"
+  {{- end }}
+  {{- end }}
+  resources:
+    requests:
+      storage: "{{ $range.size }}"
+
+{{ end }}
+{{ end }}

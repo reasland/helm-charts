@@ -1,0 +1,61 @@
+name: valheim-server
+
+image:
+  repository: lloesche/valheim-server
+
+env:
+  - name: SERVER_NAME
+    value: valheim.eas.land
+  - name: WORLD_NAME
+    value: valheim.eas.land
+  - name: SERVER_PASS
+    valueFrom:
+      secretKeyRef:
+        name: valheim-server
+        key: SERVER_PASS
+  - name: BACKUPS_MAX_COUNT
+    value: "3"
+  - name: BACKUPS_IF_IDLE
+    value: "false"
+  - name: STATUS_HTTP
+    value: "true"
+
+service:
+  type: NodePort
+  ports:
+    - port: 2456
+      targetPort: 2456
+      protocol: UDP
+      name: gameport
+    - port: 2457
+      targetPort: 2457
+      protocol: UDP
+      name: queryport
+
+volumeMounts:
+  - mountPath: /config
+    name: gamefiles
+  - mountPath: /opt/valheim
+    name: serverfiles
+
+volumes:
+  - name: gamefiles
+    persistentVolumeClaim:
+      claimName: valheim-server-game-files
+  - name: serverfiles
+    persistentVolumeClaim:
+      claimName: valheim-server-server-files
+
+persistentVolume:
+  - name: valheim-server-game-files
+    accessModes:
+      - ReadWriteOnce
+    annotations: {}
+    mountPath: /config
+    size: 1T
+  - name: valheim-server-server-files
+    accessModes:
+      - ReadWriteOnce
+    annotations: {}
+    mountPath: /opt/valheim
+    size: 1T
