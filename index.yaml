@@ -1,0 +1,20 @@
+apiVersion: v1
+entries:
+  generic:
+  - apiVersion: v2
+    created: "2025-10-28T14:06:55.95104-05:00"
+    description: A Helm chart to host basic docker containers in k8
+    digest: 4ce0d634b3ac36fa4fb9d61da58b08dc3fc0e62e2d3e305045e665dfcd8c3c02
+    home: https://github.com/reasland/helm-charts
+    keywords:
+    - generic
+    maintainers:
+    - email: riley@eas.land
+      name: reasland
+    name: generic
+    sources:
+    - https://github.com/reasland/helm-charts
+    urls:
+    - generic-0.0.1.tgz
+    version: 0.0.1
+generated: "2025-10-28T14:06:55.950255-05:00"
